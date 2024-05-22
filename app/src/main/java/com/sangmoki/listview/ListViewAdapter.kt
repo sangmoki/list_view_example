@@ -8,7 +8,10 @@ import android.widget.TextView
 
 // 데이터를 받아주기 위한 Adapter 클래스
 // 문자열 데이터를 받기 위해 <String> 타입으로 설정
-class ListViewAdapter(val List : MutableList<String>) : BaseAdapter() {
+//class ListViewAdapter(val List : MutableList<String>) : BaseAdapter() {
+
+// ListViewModel 데이터를 받기 위해 <ListViewModel> 타입으로 설정
+class ListViewAdapter(val List : MutableList<ListViewModel>) : BaseAdapter() {
 
     // 전체 아이템의 개수 반환
     override fun getCount(): Int {
@@ -26,6 +29,29 @@ class ListViewAdapter(val List : MutableList<String>) : BaseAdapter() {
     }
 
     // list_view_item에서 설정한 item_list_view 레이아웃을 inflate하여 반환
+    // String 타입일 때
+//    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+//
+//        var convertView = convertView
+//
+//        // 만약 convertView가 null이라면
+//        if (convertView == null) {
+//            // item_list_view 레이아웃을 inflate하여 convertView에 저장
+//            convertView = LayoutInflater.from(parent?.context).inflate(R.layout.list_view_item, parent, false)
+//        }
+//
+//        // listViewItem 레이아웃에서 TextView를 찾아 data 변수에 저장
+//        val data = convertView!!.findViewById<TextView>(R.id.listViewItem)
+//
+//        // data 변수의 text(android:text)에 List[아이템인덱스]를 넣어준다.
+//        data.text = List[position]
+//
+//
+//        // 컨버트뷰를 가져오면 반환해준다.
+//        return convertView!!
+//    }
+
+    // listViewModel 타입일 때
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         var convertView = convertView
@@ -36,13 +62,17 @@ class ListViewAdapter(val List : MutableList<String>) : BaseAdapter() {
             convertView = LayoutInflater.from(parent?.context).inflate(R.layout.list_view_item, parent, false)
         }
 
-        // listViewItem 레이아웃에서 TextView를 찾아 data 변수에 저장
-        val data = convertView!!.findViewById<TextView>(R.id.listViewItem)
-        // data 변수의 text(android:text)에 List[아이템인덱스]를 넣어준다.
-        data.text = List[position]
+        // listViewItem 레이아웃에서 TextView를 찾아 title 변수에 저장
+        val title = convertView!!.findViewById<TextView>(R.id.listViewItem)
+        // listViewItem 레이아웃에서 TextView2를 찾아 content 변수에 저장
+        val content = convertView!!.findViewById<TextView>(R.id.listViewItem2)
+
+        // title.text에 List[아이템인덱스].title을 넣어준다.
+        title.text = List[position].title
+        // content.text에 List[아이템인덱스].content를 넣어준다.
+        content.text = List[position].content
 
         // 컨버트뷰를 가져오면 반환해준다.
         return convertView!!
     }
-
 }
